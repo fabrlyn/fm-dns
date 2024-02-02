@@ -1,6 +1,13 @@
-use clap::{command, Parser};
+use std::sync::Arc;
 
-use crate::args::ServiceQuery;
+use clap::{command, Parser};
+use ractor::{Actor, OutputPort};
+
+use crate::{
+    args::ServiceQuery,
+    scanner::{self, Scanner},
+    stdout::Stdout,
+};
 
 #[derive(Debug, Parser)]
 #[command(
@@ -17,9 +24,29 @@ pub struct Cli {
 }
 
 impl Cli {
-    pub fn run() {
+    pub async fn run() {
         let cli = Cli::parse();
         println!("Service query: {:?}", cli.service_query);
+
+        let output = Arc::new(OutputPort::default());
+
+        let (_actor, handle) = Actor::spawn(
+            None,
+            Scanner,
+            scanner::Arguments {
+                output_port: output.clone(),
+                service_query: cli.service_query.clone(),
+            },
+        )
+        .await
+        .expect("Failed to start ping-pong actor");
+
+        let (_actor, handle) = Actor::spawn(None, Stdout, output)
+            .await
+            .expect("Failed to start ping-pong actor");
+        handle
+            .await
+            .expect("Ping-pong actor failed to exit properly");
     }
 }
 

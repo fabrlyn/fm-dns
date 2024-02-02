@@ -61,6 +61,10 @@ impl ServiceQuery {
         ))
     }
 
+    pub fn to_string(&self) -> String {
+        format!("_{}._{}.{}", self.service.0, self.proto.0, self.domain.0)
+    }
+
     pub fn decode(input: &str) -> Option<Self> {
         Self::parse(input)
             .map(|(_, service_query)| service_query)
