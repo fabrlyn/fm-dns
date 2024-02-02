@@ -3,17 +3,15 @@ mod cli;
 mod scanner;
 mod stdout;
 
-use async_trait::async_trait;
-use cli::Cli;
-use futures_util::{pin_mut, StreamExt};
 
-use ractor::{concurrency::JoinHandle, Actor, ActorProcessingErr, ActorRef, OutputPort};
+use cli::Cli;
+
+
+
 use std::{
     error::Error,
-    sync::Arc,
-    time::{Duration, Instant},
 };
-use tokio::spawn;
+
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
