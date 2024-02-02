@@ -500,6 +500,8 @@ checksum = "c4d33be9473d06f75f58220f71f7a9317aca647dc061dbd3c361b0bef505fbea"
 dependencies = [
  "byteorder",
  "quick-error",
+ "serde",
+ "serde_derive",
 ]
 
 [[package]]
@@ -586,6 +588,7 @@ dependencies = [
  "async-trait",
  "chrono",
  "clap",
+ "dns-parser",
  "futures-util",
  "mdns",
  "nom",
@@ -1325,9 +1328,9 @@ dependencies = [
 
 [[package]]
 name = "tokio"
-version = "1.35.1"
+version = "1.36.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c89b4efa943be685f629b149f53829423f8f5531ea21249408e8e2f8671ec104"
+checksum = "61285f6515fa018fb2d1e46eb21223fff441ee8db5d0f1435e8ab4f5cdb80931"
 dependencies = [
  "backtrace",
  "bytes",

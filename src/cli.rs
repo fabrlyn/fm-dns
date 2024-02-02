@@ -26,7 +26,6 @@ pub struct Cli {
 impl Cli {
     pub async fn run() {
         let cli = Cli::parse();
-        println!("Service query: {:?}", cli.service_query);
 
         let output = Arc::new(OutputPort::default());
 

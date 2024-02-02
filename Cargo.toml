@@ -9,6 +9,7 @@ edition = "2021"
 async-trait = "0.1.77"
 chrono = { version = "0.4.33", features = ["serde"] }
 clap = { version = "4.4.18", features = ["derive"] }
+dns-parser = { version = "0.8.0", features = ["serde", "serde_derive"] }
 futures-util = "0.3.30"
 mdns = "3.0.0"
 nom = "7.1.3"
