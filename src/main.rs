@@ -1,14 +1,13 @@
-mod cli;
 mod args;
+mod cli;
 
 use async_trait::async_trait;
 use cli::Cli;
 use futures_util::{pin_mut, StreamExt};
-use mdns::{Record, RecordKind};
+
 use ractor::{concurrency::JoinHandle, Actor, ActorProcessingErr, ActorRef, OutputPort};
 use std::{
     error::Error,
-    fmt::Arguments,
     sync::Arc,
     time::{Duration, Instant},
 };
@@ -74,10 +73,7 @@ impl Actor for Scanner {
             let stream = match mdns::discover::all(service_name, Duration::from_secs(5)) {
                 Ok(stream) => stream,
                 Err(e) => {
-                    actor.stop(Some(format!(
-                        "Failed to start mdns discovery: {}",
-                        e.to_string()
-                    )));
+                    actor.stop(Some(format!("Failed to start mdns discovery: {}", e)));
                     return;
                 }
             };
@@ -127,7 +123,7 @@ impl Actor for StdoutPublisher {
         &self,
         _: ActorRef<Self::Msg>,
         message: Self::Msg,
-        state: &mut Self::State,
+        _state: &mut Self::State,
     ) -> Result<(), ActorProcessingErr> {
         println!("From stdout publisher: {message:?}");
         Ok(())

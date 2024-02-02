@@ -1,14 +1,6 @@
-use std::str::FromStr;
-
 use clap::{command, Parser};
-use nom::{
-    bytes::complete::{tag, take_while},
-    character::{is_alphabetic, is_alphanumeric},
-    AsChar, IResult,
-};
 
 use crate::args::ServiceQuery;
-
 
 #[derive(Debug, Parser)]
 #[command(
@@ -31,9 +23,7 @@ impl Cli {
     }
 }
 
-
 fn parse_service_query(input: &str) -> Result<ServiceQuery, String> {
-        ServiceQuery::decode(input).ok_or(
-        "Invalid service query, needs to in the format: _service._proto.domain".to_string()
-    )
+    ServiceQuery::decode(input)
+        .ok_or("Invalid service query, needs to in the format: _service._proto.domain".to_string())
 }
