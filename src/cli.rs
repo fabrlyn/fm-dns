@@ -29,7 +29,7 @@ impl Cli {
 
         let output = Arc::new(OutputPort::default());
 
-        let (_actor, _handle) = Actor::spawn(
+        let (_actor, _) = Actor::spawn(
             None,
             Scanner,
             scanner::Arguments {
