@@ -6,7 +6,10 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+anyhow = "1.0.79"
+askama = "0.12.1"
 async-trait = "0.1.77"
+axum = "0.7.4"
 chrono = { version = "0.4.33", features = ["serde"] }
 clap = { version = "4.4.18", features = ["derive"] }
 dns-parser = { version = "0.8.0", features = ["serde", "serde_derive"] }
@@ -18,3 +21,7 @@ serde = { version = "1.0.196", features = ["derive"] }
 serde_json = "1.0.113"
 tokio = { version = "1.35.1", features = ["full"] }
 tokio-util = "0.7.10"
+tower = "0.4.13"
+tower-http = { version = "0.5.1", features = ["fs"] }
+tracing = "0.1.40"
+tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
