@@ -1,17 +1,14 @@
 pub mod model;
-use std::{sync::Arc, time::Duration};
 
+use self::model::Response;
+use crate::args::ServiceQuery;
 use async_trait::async_trait;
 use chrono::Utc;
 use futures_util::{pin_mut, StreamExt};
 use mdns::discover::{self, Discovery};
 use ractor::{ActorProcessingErr, ActorRef, OutputPort};
-
+use std::{sync::Arc, time::Duration};
 use tokio::{spawn, task::JoinHandle};
-
-use crate::args::ServiceQuery;
-
-use self::model::Response;
 
 pub type Actor = ActorRef<Msg>;
 
