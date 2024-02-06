@@ -21,17 +21,11 @@ pub struct Response {
     pub responded_at: chrono::DateTime<Utc>,
 }
 
-/// The CLASS value according to RFC 1035
 #[derive(Debug, Clone, Serialize)]
 pub enum Class {
-    /// the Internet
     IN = 1,
-    /// the CSNET class (Obsolete - used only for examples in some obsolete
-    /// RFCs)
     CS = 2,
-    /// the CHAOS class
     CH = 3,
-    /// Hesiod [Dyer 87]
     HS = 4,
 }
 
@@ -61,7 +55,6 @@ pub enum RecordKind {
     },
     TXT(Vec<String>),
     PTR(String),
-    /// A record kind that hasn't been implemented by this library yet.
     Unimplemented(Vec<u8>),
 }
 
