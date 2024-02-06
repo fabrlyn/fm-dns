@@ -14,7 +14,7 @@ struct Cli {
         value_parser = parse_service_query 
     )]
     service_query: Arc<ServiceQuery>,
-    #[arg(help = "The interval to query the network.", default_value = "60", value_parser = parse_interval)]
+    #[arg(help = "The interval to query the network.", default_value = "60", value_parser = parse_interval, long="interval")]
     interval: Duration,
 }
 
