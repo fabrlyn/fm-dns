@@ -3,7 +3,7 @@ use std::sync::Arc;
 use async_trait::async_trait;
 use ractor::{Actor, ActorProcessingErr, ActorRef, OutputPort};
 
-use crate::scanner::Response;
+use crate::scanner::model::Response;
 
 pub struct Stdout;
 

@@ -1,11 +1,11 @@
-use std::sync::Arc;
+use std::time::Duration;
 
 use clap::{command, Parser};
-use ractor::{Actor, OutputPort};
+use ractor::Actor;
 
 use crate::{
     args::ServiceQuery,
-    scanner::{self, Scanner},
+    scanner::{self, Port, Scanner},
     stdout::Stdout,
 };
 
@@ -27,20 +27,21 @@ impl Cli {
     pub async fn run() {
         let cli = Cli::parse();
 
-        let output = Arc::new(OutputPort::default());
+        let port = Port::default();
 
         let (_actor, _) = Actor::spawn(
             None,
             Scanner,
             scanner::Arguments {
-                output_port: output.clone(),
+                port: port.clone(),
                 service_query: cli.service_query.clone(),
+                interval: Duration::from_secs(5),
             },
         )
         .await
         .expect("Failed to start ping-pong actor");
 
-        let (_actor, handle) = Actor::spawn(None, Stdout, output)
+        let (_actor, handle) = Actor::spawn(None, Stdout, port)
             .await
             .expect("Failed to start ping-pong actor");
         handle
