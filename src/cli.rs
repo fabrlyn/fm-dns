@@ -1,4 +1,4 @@
-use std::time::Duration;
+use std::{sync::Arc, time::Duration};
 
 use clap::{command, Parser};
 use ractor::Actor;
@@ -20,7 +20,7 @@ pub struct Cli {
         help = "The service to query for on the network. Example: _googlecast._tcp.local",
         value_parser = parse_service_query 
     )]
-    service_query: ServiceQuery,
+    service_query: Arc<ServiceQuery>,
 }
 
 impl Cli {

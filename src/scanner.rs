@@ -21,7 +21,7 @@ pub type Port = Arc<OutputPort<Arc<Response>>>;
 
 pub struct Arguments {
     pub port: Port,
-    pub service_query: ServiceQuery,
+    pub service_query: Arc<ServiceQuery>,
     pub interval: Duration,
 }
 
@@ -66,7 +66,6 @@ fn create_discovery(actor: &Actor, arguments: &Arguments) -> Result<Discovery, (
 
     discover::all(service_query, interval).map_err(|e| {
         actor.stop(Some(format!("Failed to start mdns discovery: {}", e)));
-        
     })
 }
 
