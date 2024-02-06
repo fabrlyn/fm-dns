@@ -1,7 +1,7 @@
 pub mod model;
 
 use self::model::Response;
-use crate::args::ServiceQuery;
+use crate::model::ServiceQuery;
 use async_trait::async_trait;
 use chrono::Utc;
 use futures_util::{pin_mut, StreamExt};

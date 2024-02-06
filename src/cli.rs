@@ -1,13 +1,9 @@
-use std::{sync::Arc, time::Duration};
-
-use clap::{command, Parser};
-use ractor::{concurrency::JoinHandle, Actor};
-
 use crate::{
-    args::ServiceQuery,
-    scanner::{self, Port, Scanner},
-    stdout::Stdout,
+    application::{self, Config},
+    model::ServiceQuery,
 };
+use clap::{command, Parser};
+use std::{sync::Arc, time::Duration};
 
 #[derive(Debug, Parser)]
 #[command(
@@ -21,51 +17,28 @@ pub struct Cli {
         value_parser = parse_service_query 
     )]
     service_query: Arc<ServiceQuery>,
+    #[arg(help = "The interval to query the network.", default_value = "60", value_parser = parse_interval)]
+    interval: Duration,
 }
 
-impl Cli {
-    pub async fn run() {
-        let cli = Cli::parse();
+pub async fn run() {
+    let cli = Cli::parse();
 
-        let port = Port::default();
-
-        start_stdout(port.clone()).await;
-
-        let handle = start_scanner(&cli, port).await;
-
-        handle
-            .await
-            .expect("Ping-pong actor failed to exit properly");
-    }
-}
-
-async fn start_scanner(cli: &Cli, port: Port) -> JoinHandle<()> {
-    let (_, handle) = Actor::spawn(
-        None,
-        Scanner,
-        scanner::Arguments {
-            port: port.clone(),
-            service_query: cli.service_query.clone(),
-            interval: Duration::from_secs(5),
-        },
-    )
-    .await
-    .expect("Failed to start ping-pong actor");
-
-    handle
-}
-
-async fn start_stdout(port: Port) -> JoinHandle<()> {
-    let (stdout, handle) = Actor::spawn(None, Stdout, ())
-        .await
-        .expect("Failed to start ping-pong actor");
-
-    port.subscribe(stdout, Some);
-    handle
+    application::run(Config {
+        interval: cli.interval,
+        service_query: cli.service_query,
+    })
+    .await;
 }
 
 fn parse_service_query(input: &str) -> Result<Arc<ServiceQuery>, String> {
     ServiceQuery::decode(input)
         .map(Arc::new)
         .ok_or("Invalid service query, needs to in the format: _service._proto.domain".to_string())
+}
+
+fn parse_interval(input: &str) -> Result<Duration, String> {
+    str::parse(input)
+        .map(Duration::from_secs)
+        .map_err(|_| "Not a valid interval. Needs to be a number of seconds.".to_string())
 }

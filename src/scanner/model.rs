@@ -1,7 +1,6 @@
-use std::net::{Ipv4Addr, Ipv6Addr};
-
 use chrono::{DateTime, Utc};
 use serde::Serialize;
+use std::net::{Ipv4Addr, Ipv6Addr};
 
 #[derive(Debug, Serialize)]
 pub struct Response {

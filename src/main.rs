@@ -1,11 +1,12 @@
-mod args;
+mod application;
 mod cli;
-pub mod scanner;
+mod model;
+mod scanner;
 mod stdout;
 
-use cli::Cli;
+use cli::run;
 
 #[tokio::main]
 async fn main() {
-    Cli::run().await;
+    run().await;
 }
