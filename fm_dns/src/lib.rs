@@ -26,7 +26,7 @@ pub async fn run(config: Config) {
 
     handle
         .await
-        .expect("Ping-pong actor failed to exit properly");
+        .expect("Scanner failed to exit properly");
 }
 
 async fn start_scanner(config: &Config, port: Port) -> JoinHandle<()> {
@@ -40,7 +40,7 @@ async fn start_scanner(config: &Config, port: Port) -> JoinHandle<()> {
         },
     )
     .await
-    .expect("Failed to start ping-pong actor");
+    .expect("Failed to start Scanner");
 
     handle
 }
@@ -48,7 +48,7 @@ async fn start_scanner(config: &Config, port: Port) -> JoinHandle<()> {
 async fn start_stdout(port: Port) -> JoinHandle<()> {
     let (stdout, handle) = Actor::spawn(None, Stdout, ())
         .await
-        .expect("Failed to start ping-pong actor");
+        .expect("Failed to start Stdout");
 
     port.subscribe(stdout, Some);
     handle
