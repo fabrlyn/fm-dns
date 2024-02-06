@@ -1,4 +1,3 @@
-mod application;
 pub mod model;
 mod scanner;
 mod stdout;
