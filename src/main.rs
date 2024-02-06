@@ -1,6 +1,6 @@
 mod args;
 mod cli;
-mod scanner;
+pub mod scanner;
 mod stdout;
 
 use cli::Cli;
