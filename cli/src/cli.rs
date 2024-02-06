@@ -1,8 +1,5 @@
-use crate::{
-    application::{self, Config},
-    model::ServiceQuery,
-};
 use clap::{command, Parser};
+use fm_dns::{model::ServiceQuery, Config};
 use std::{sync::Arc, time::Duration};
 
 #[derive(Debug, Parser)]
@@ -11,7 +8,7 @@ use std::{sync::Arc, time::Duration};
     name = "fm-dns",
     author = "fabrlyn"
 )]
-pub struct Cli {
+struct Cli {
     #[arg(
         help = "The service to query for on the network. Example: _googlecast._tcp.local",
         value_parser = parse_service_query 
@@ -24,7 +21,7 @@ pub struct Cli {
 pub async fn run() {
     let cli = Cli::parse();
 
-    application::run(Config {
+    fm_dns::run(Config {
         interval: cli.interval,
         service_query: cli.service_query,
     })

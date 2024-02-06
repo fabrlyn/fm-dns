@@ -1,6 +1,11 @@
+mod application;
+pub mod model;
+mod scanner;
+mod stdout;
+
 use crate::{
     model::ServiceQuery,
-    scanner::{self, Port, Scanner},
+    scanner::{Port, Scanner},
     stdout::Stdout,
 };
 use ractor::{concurrency::JoinHandle, Actor};

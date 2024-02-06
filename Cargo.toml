@@ -1,21 +1,10 @@
-[package]
-name = "fm_dns"
-version = "0.1.0"
-edition = "2021"
+[workspace]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+members = ["cli", "fm_dns"]
 
-[dependencies]
-async-trait = "0.1.77"
-axum = "0.7.4"
-chrono = { version = "0.4.33", features = ["serde"] }
-clap = { version = "4.4.18", features = ["derive"] }
-dns-parser = { version = "0.8.0", features = ["serde", "serde_derive"] }
-futures-util = "0.3.30"
-mdns = "3.0.0"
-nom = "7.1.3"
-ractor = "0.9.3"
-serde = { version = "1.0.196", features = ["derive"] }
-serde_json = "1.0.113"
-tokio = { version = "1.35.1", features = ["full"] }
-tokio-util = "0.7.10"
+resolver = "2"
+
+[profile.release]
+codegen-units = 1
+lto = true
+strip = true
